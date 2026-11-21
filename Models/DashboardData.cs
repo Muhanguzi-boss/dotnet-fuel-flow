@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Models;
-// Aggregated numbers shown on the main dashboard
 public class DashboardData
 {
     public decimal SalesToday { get; set; }

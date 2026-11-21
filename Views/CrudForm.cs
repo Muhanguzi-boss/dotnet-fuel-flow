@@ -1,7 +1,5 @@
 namespace PetrolStationMS.Views;
 
-// Base for master-data screens: grid on top, edit panel at bottom, Add/Save/Deactivate buttons.
-// Subclasses supply data loading, field mapping and the controller calls.
 public abstract class CrudForm<T> : BaseForm where T : class
 {
     protected readonly DataGridView Grid = Ui.Grid();
@@ -26,16 +24,14 @@ public abstract class CrudForm<T> : BaseForm where T : class
         if (canToggle) Buttons.Controls.Add(_btnToggle);
         Buttons.Controls.Add(_status);
 
-        // CurrentCellChanged (not SelectionChanged, which can fire before CurrentRow updates) keeps Current in sync;
-        // CellClick also covers re-clicking the same row after "New"
         Grid.CurrentCellChanged += (s, e) => Select(Grid.CurrentRow?.DataBoundItem as T);
         Grid.CellClick += (s, e) => { if (e.RowIndex >= 0) Select(Grid.Rows[e.RowIndex].DataBoundItem as T); };
         Load += (s, e) => Reload();
     }
 
     protected abstract Result<List<T>> Fetch();
-    protected abstract void ShowItem(T? item);         // item null = blank form
-    protected abstract Result SaveItem(T? current);    // current null = create
+    protected abstract void ShowItem(T? item);
+    protected abstract Result SaveItem(T? current);
     protected virtual bool IsActive(T item) => true;
     protected virtual Result Toggle(T item, bool active) => Result.Fail("Not supported.");
 

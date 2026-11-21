@@ -6,7 +6,6 @@ public class ShiftController : BaseController
     public Result<List<Shift>> GetRecent() => Run(() => new ShiftRepository().GetRecent());
     public Result<List<PumpReading>> GetReadings(int shiftId) => Run(() => new ShiftRepository().GetReadings(shiftId));
 
-    // Active pumps with the last closing meter as the suggested opening reading
     public Result<List<PumpReading>> PrepareOpening() => Run(() =>
     {
         var repo = new ShiftRepository();
@@ -39,7 +38,6 @@ public class ShiftController : BaseController
         return Result.Success();
     });
 
-    // Close: saves closing readings, creates sales and lowers tank stock in ONE transaction
     public Result Close(int shiftId, List<PumpReading> readings) => Run(() =>
     {
         Need("Shifts");

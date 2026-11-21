@@ -4,7 +4,6 @@ public class SaleController : BaseController
 {
     public Result<List<Sale>> GetRange(DateTime from, DateTime to) => Run(() => { Need("Sales"); return new SaleRepository().GetRange(from, to); });
 
-    // Void: returns litres to the tank; payments on the sale must be voided first
     public Result Void(int id, string reason) => Run(() =>
     {
         Need("Voids");

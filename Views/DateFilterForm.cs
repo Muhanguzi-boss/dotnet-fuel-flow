@@ -1,6 +1,5 @@
 namespace PetrolStationMS.Views;
 
-// Base for read-only list screens with a From/To filter above a grid
 public abstract class DateFilterForm : BaseForm
 {
     protected readonly DataGridView Grid = Ui.Grid();

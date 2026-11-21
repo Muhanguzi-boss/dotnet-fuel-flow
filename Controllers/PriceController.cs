@@ -6,7 +6,6 @@ public class PriceController : BaseController
     public Result<List<PriceHistory>> GetHistory() => Run(() => _repo.GetHistory());
     public Result<decimal?> Current(int productId) => Run(() => _repo.GetPriceAt(productId, DateTime.Now));
 
-    // Adds a new price row (history kept) and audits the change
     public Result SetPrice(int productId, decimal price) => Run(() =>
     {
         Need("Prices");

@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// Manager-only: void sales, deliveries or payments with a reason (rows are kept)
 public class VoidsForm : DateFilterForm
 {
     readonly SaleController _sales = new();

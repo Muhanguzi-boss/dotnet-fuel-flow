@@ -1,6 +1,5 @@
 namespace PetrolStationMS.Controllers;
 
-// User administration: Admin only
 public class UserController : BaseController
 {
     readonly UserRepository _repo = new();

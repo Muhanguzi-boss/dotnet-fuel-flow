@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
 namespace PetrolStationMS.Views;
 
-// Shared UI helpers (no business logic)
 public static class Ui
 {
     public static readonly Font AppFont = new("Segoe UI", 9.5f);
@@ -12,7 +11,6 @@ public static class Ui
     public static bool Confirm(string msg) =>
         MessageBox.Show(msg, "Petrol Station MS", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
 
-    // Shows the error if the result failed; true when OK
     public static bool Check(Result r)
     {
         if (!r.Ok) Error(r.Error);
@@ -51,7 +49,6 @@ public static class Ui
         Tidy(g);
     }
 
-    // Hide id columns, split PascalCase headers, format numbers and dates
     public static void Tidy(DataGridView g)
     {
         foreach (DataGridViewColumn col in g.Columns)
@@ -69,7 +66,6 @@ public static class Ui
         }
     }
 
-    // Label above a control, added to a flow panel
     public static void Field(FlowLayoutPanel panel, string label, Control c, int width = 170)
     {
         var p = new Panel { Width = width + 10, Height = 52, Margin = new Padding(0, 0, 6, 0) };
@@ -98,7 +94,6 @@ public static class Ui
         Format = DateTimePickerFormat.Short, Value = v ?? DateTime.Today
     };
 
-    // Simple input dialog; returns null if cancelled
     public static string? Prompt(string title, string label, bool password = false)
     {
         using var f = new Form
@@ -115,7 +110,6 @@ public static class Ui
         return f.ShowDialog() == DialogResult.OK ? t.Text : null;
     }
 
-    // Selects an item in a combo by its Id property value
     public static void SelectById<T>(ComboBox cb, int id, Func<T, int> getId)
     {
         for (int i = 0; i < cb.Items.Count; i++)
@@ -124,7 +118,6 @@ public static class Ui
     }
 }
 
-// Base form: consistent font, size, position
 public class BaseForm : Form
 {
     public BaseForm(string title, int w = 980, int h = 620)

@@ -9,7 +9,6 @@ internal static class Program
         try { Db.LoadConfig(); }
         catch (Exception ex) { MessageBox.Show(ex.Message, "Configuration error", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-        // login -> main window; repeats after Logout
         while (true)
         {
             using (var login = new LoginForm())

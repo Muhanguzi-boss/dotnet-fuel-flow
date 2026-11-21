@@ -1,6 +1,5 @@
 namespace PetrolStationMS.Data;
 
-// Read-only aggregate queries for the dashboard and reports
 public class ReportRepository : Repo
 {
     public ReportRepository(IDbConnection? c = null, IDbTransaction? t = null) : base(c, t) { }
@@ -25,7 +24,6 @@ public class ReportRepository : Repo
           LEFT JOIN sales s ON s.product_id = p.id AND NOT s.is_void AND s.created_at::date = CURRENT_DATE
           GROUP BY p.name ORDER BY p.name");
 
-    // ---- reports (date range, inclusive) ----
     static object Range(DateTime f, DateTime t) => new { from = f.Date, to = t.Date.AddDays(1) };
 
     public DataTable SalesByProduct(DateTime f, DateTime t) => Table(

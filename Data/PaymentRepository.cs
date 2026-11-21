@@ -19,7 +19,6 @@ public class PaymentRepository : Repo
         "UPDATE payments SET is_void=TRUE, void_reason=@reason, voided_by=@by, voided_at=now() WHERE id=@id", new { id, reason, by }, t));
     public decimal ExpectedSales(int shiftId) => Run((c, t) => c.ExecuteScalar<decimal>(
         "SELECT COALESCE(SUM(total),0) FROM sales WHERE shift_id=@shiftId AND NOT is_void", new { shiftId }, t));
-    // Payments for a shift grouped by method (sale payments only, not voided)
     public DataTable ByMethod(int shiftId) => Run((c, t) =>
     {
         var dt = new DataTable();

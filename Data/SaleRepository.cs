@@ -21,6 +21,5 @@ public class SaleRepository : Repo
         "UPDATE sales SET is_void=TRUE, void_reason=@reason, voided_by=@by, voided_at=now() WHERE id=@id", new { id, reason, by }, t));
     public int CountActivePayments(int saleId) => Run((c, t) => c.ExecuteScalar<int>(
         "SELECT count(*) FROM payments WHERE sale_id=@saleId AND NOT is_void", new { saleId }, t));
-    // Tank used by the pump of a sale
     public int TankIdOfPump(int pumpId) => Run((c, t) => c.ExecuteScalar<int>("SELECT tank_id FROM pumps WHERE id=@pumpId", new { pumpId }, t));
 }

@@ -4,7 +4,6 @@ public class DeliveryController : BaseController
 {
     public Result<List<Delivery>> GetRange(DateTime from, DateTime to) => Run(() => new DeliveryRepository().GetRange(from, to));
 
-    // Records a delivery and raises tank stock in ONE transaction
     public Result Record(Delivery d) => Run(() =>
     {
         Need("Deliveries");
@@ -32,7 +31,6 @@ public class DeliveryController : BaseController
         return Result.Success();
     });
 
-    // Void: Manager only; keeps the row and removes the litres from the tank
     public Result Void(int id, string reason) => Run(() =>
     {
         Need("Voids");

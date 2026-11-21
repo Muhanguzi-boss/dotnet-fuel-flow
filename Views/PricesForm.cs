@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// Manager sets fuel prices; every change is kept in history
 public class PricesForm : BaseForm
 {
     readonly PriceController _c = new();

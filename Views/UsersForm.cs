@@ -24,7 +24,6 @@ public class UsersForm : CrudForm<User>
     {
         var u = cur ?? new User();
         u.Username = _username.Text; u.FullName = _full.Text;
-        // role ids follow the seed order: map by name via controller list
         var roles = _c.GetRoles();
         if (!roles.Ok) return roles;
         u.RoleId = roles.Value!.FirstOrDefault(r => r.Name == _role.SelectedItem as string)?.Id ?? 0;

@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// Main window: role-based menu + dashboard
 public class MainForm : Form
 {
     readonly MenuStrip _menu = new();
@@ -20,7 +19,6 @@ public class MainForm : Form
         Load += (s, e) => RefreshDashboard();
     }
 
-    // Menu items carry a module tag; visibility comes from Session.Can
     void BuildMenu()
     {
         var file = TopMenu("File");
@@ -57,7 +55,6 @@ public class MainForm : Form
         Open(adm, "Audit Log", "Audit", () => new AuditForm());
         Open(adm, "Void Transactions", "Voids", () => new VoidsForm());
 
-        // show only what the role may use; hide empty top-level menus
         foreach (ToolStripMenuItem top in _menu.Items)
         {
             foreach (ToolStripItem sub in top.DropDownItems)
@@ -68,7 +65,6 @@ public class MainForm : Form
 
     ToolStripMenuItem TopMenu(string text) { var m = new ToolStripMenuItem(text); _menu.Items.Add(m); return m; }
 
-    // Menu item that opens a form as a dialog, then refreshes the dashboard
     void Open(ToolStripMenuItem parent, string text, string module, Func<Form> make) => Item(parent, text, module, () =>
     {
         using var f = make();

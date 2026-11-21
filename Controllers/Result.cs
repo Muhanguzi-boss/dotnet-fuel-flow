@@ -16,13 +16,11 @@ public class Result<T> : Result
     public new static Result<T> Fail(string msg) => new() { Ok = false, Error = msg };
 }
 
-// Thrown for business-rule violations; message is shown to the user
 public class BusinessException : Exception
 {
     public BusinessException(string msg) : base(msg) { }
 }
 
-// Common helpers: error handling, permission guard, validation
 public abstract class BaseController
 {
     protected static Result Run(Func<Result> f)
@@ -47,7 +45,6 @@ public abstract class BaseController
         _ => "Unexpected error: " + ex.Message
     };
 
-    // Server-side permission check (views also hide menus)
     protected static void Need(string module)
     {
         if (!Session.Can(module)) throw new BusinessException("You do not have permission for this action.");

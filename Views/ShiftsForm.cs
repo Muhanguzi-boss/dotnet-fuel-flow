@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// Open a shift with opening meter readings; close it with closing readings
 public class ShiftsForm : BaseForm
 {
     readonly ShiftController _c = new();

@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// Customer pays off part of their credit balance
 public class ReceiveCreditForm : BaseForm
 {
     readonly PaymentController _c = new();

@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// Record payments for a shift/sale (Cash, Mobile Money, Card, Credit)
 public class PaymentsForm : BaseForm
 {
     readonly PaymentController _c = new();

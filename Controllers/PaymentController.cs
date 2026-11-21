@@ -9,7 +9,6 @@ public class PaymentController : BaseController
     public Result<List<Payment>> GetRange(DateTime from, DateTime to) => Run(() => new PaymentRepository().GetRange(from, to));
     public Result<List<Sale>> SalesOfShift(int shiftId) => Run(() => new SaleRepository().GetByShift(shiftId));
 
-    // Payment for a shift/sale. Credit raises the customer balance (limit enforced).
     public Result Record(Payment p) => Run(() =>
     {
         Need("Payments");
@@ -43,7 +42,6 @@ public class PaymentController : BaseController
         return Result.Success();
     });
 
-    // Customer pays off part of their credit balance
     public Result ReceiveCredit(int customerId, string method, decimal amount, string? reference) => Run(() =>
     {
         Need("Payments");
@@ -76,7 +74,6 @@ public class PaymentController : BaseController
         return new Reconciliation { ShiftId = shiftId, ExpectedSales = repo.ExpectedSales(shiftId), TotalPayments = paid, ByMethod = bm };
     });
 
-    // Void: reverses the customer balance effect
     public Result Void(int id, string reason) => Run(() =>
     {
         Need("Voids");
@@ -90,7 +87,6 @@ public class PaymentController : BaseController
             if (p.CustomerId.HasValue)
             {
                 var cust = new CustomerRepository(c, t);
-                // credit sale: balance goes down again; credit receipt: balance goes back up
                 var delta = p.Kind == "CreditReceipt" ? p.Amount : (p.Method == "Credit" ? -p.Amount : 0);
                 if (delta != 0 && !cust.AdjustBalance(p.CustomerId.Value, delta))
                     throw new BusinessException("Cannot void: the customer's balance is lower than this credit (part of it was already repaid).");

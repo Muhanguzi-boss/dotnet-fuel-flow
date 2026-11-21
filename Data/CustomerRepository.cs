@@ -10,7 +10,6 @@ public class CustomerRepository : Repo
         "INSERT INTO customers(name, phone, credit_limit, is_active) VALUES (@Name, @Phone, @CreditLimit, @IsActive) RETURNING id", x, t));
     public void Update(Customer x) => Run((c, t) => c.Execute(
         "UPDATE customers SET name=@Name, phone=@Phone, credit_limit=@CreditLimit, is_active=@IsActive WHERE id=@Id", x, t));
-    // Adds delta to the balance; false if the balance would become negative
     public bool AdjustBalance(int id, decimal delta) => Run((c, t) => c.Execute(
         "UPDATE customers SET balance = balance + @delta WHERE id=@id AND balance + @delta >= 0", new { id, delta }, t) == 1);
 }

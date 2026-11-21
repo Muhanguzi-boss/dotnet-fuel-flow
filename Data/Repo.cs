@@ -1,6 +1,5 @@
 namespace PetrolStationMS.Data;
 
-// Base repository: uses the supplied connection/transaction, or opens its own
 public abstract class Repo
 {
     readonly IDbConnection? _c;

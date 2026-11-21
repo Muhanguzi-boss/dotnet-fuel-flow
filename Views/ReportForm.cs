@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// One screen for all reports: pick the report and a date range
 public class ReportForm : DateFilterForm
 {
     readonly ReportController _c = new();

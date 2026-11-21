@@ -2,7 +2,6 @@ namespace PetrolStationMS.Controllers;
 
 public class ReportController : BaseController
 {
-    // key -> (title, needs date range)
     public static readonly (string Key, string Title, bool UsesDates)[] Reports =
     {
         ("SalesProduct", "Sales summary by product", true),

@@ -6,7 +6,6 @@ public class TankRepository : Repo
 
     public List<Tank> GetAll(bool activeOnly = false) => Run((c, t) => c.Query<Tank>(
         Sel + " WHERE (@a = FALSE OR k.is_active) ORDER BY k.code", new { a = activeOnly }, t).ToList());
-    // forUpdate locks the row for the rest of the transaction
     public Tank? Get(int id, bool forUpdate = false) => Run((c, t) => c.QueryFirstOrDefault<Tank>(
         Sel + " WHERE k.id=@id" + (forUpdate ? " FOR UPDATE OF k" : ""), new { id }, t));
     public int Insert(Tank k) => Run((c, t) => c.ExecuteScalar<int>(
@@ -15,7 +14,6 @@ public class TankRepository : Repo
     public void Update(Tank k) => Run((c, t) => c.Execute(
         @"UPDATE tanks SET code=@Code, product_id=@ProductId, capacity=@Capacity, current_stock=@CurrentStock,
           low_threshold=@LowThreshold, is_active=@IsActive WHERE id=@Id", k, t));
-    // Atomic stock change; returns false if it would go below 0 or above capacity
     public bool AdjustStock(int id, decimal delta) => Run((c, t) => c.Execute(
         @"UPDATE tanks SET current_stock = current_stock + @delta
           WHERE id=@id AND current_stock + @delta >= 0 AND current_stock + @delta <= capacity",

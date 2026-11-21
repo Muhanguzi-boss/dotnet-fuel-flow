@@ -7,7 +7,6 @@ public class PriceRepository : Repo
 
     public List<PriceHistory> GetHistory() => Run((c, t) => c.Query<PriceHistory>(
         Sel + " ORDER BY f.effective_from DESC, f.id DESC", transaction: t).ToList());
-    // Price in effect for a product at a given moment (null if none)
     public decimal? GetPriceAt(int productId, DateTime at) => Run((c, t) => c.ExecuteScalar<decimal?>(
         @"SELECT price FROM fuel_prices WHERE product_id=@productId AND effective_from <= @at
           ORDER BY effective_from DESC, id DESC LIMIT 1", new { productId, at }, t));

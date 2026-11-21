@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Views;
-// Expected sales vs payments received for a shift
 public class ReconciliationForm : BaseForm
 {
     readonly PaymentController _c = new();

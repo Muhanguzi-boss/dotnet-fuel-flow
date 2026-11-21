@@ -1,5 +1,4 @@
 namespace PetrolStationMS.Models;
-// Shift reconciliation: expected sales vs payments received
 public class Reconciliation
 {
     public int ShiftId { get; set; }

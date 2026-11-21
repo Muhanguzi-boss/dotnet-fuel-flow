@@ -14,7 +14,6 @@ public class ShiftRepository : Repo
     public void Close(int id) => Run((c, t) => c.Execute(
         "UPDATE shifts SET status='Closed', closed_at=now() WHERE id=@id", new { id }, t));
 
-    // ---- pump readings ----
     const string RSel = @"SELECT r.*, p.code AS pump_code, f.name AS product_name FROM pump_readings r
         JOIN pumps p ON p.id = r.pump_id JOIN tanks k ON k.id = p.tank_id JOIN fuel_products f ON f.id = k.product_id";
     public List<PumpReading> GetReadings(int shiftId) => Run((c, t) => c.Query<PumpReading>(
@@ -24,7 +23,6 @@ public class ShiftRepository : Repo
         new { shiftId, pumpId, opening }, t));
     public void SetClosing(int readingId, decimal closing) => Run((c, t) => c.Execute(
         "UPDATE pump_readings SET closing_reading=@closing WHERE id=@readingId", new { readingId, closing }, t));
-    // Last closing meter value of a pump from earlier shifts (0 if none)
     public decimal LastClosing(int pumpId) => Run((c, t) => c.ExecuteScalar<decimal?>(
         @"SELECT closing_reading FROM pump_readings WHERE pump_id=@pumpId AND closing_reading IS NOT NULL
           ORDER BY shift_id DESC LIMIT 1", new { pumpId }, t) ?? 0);
